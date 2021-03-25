@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title data-th-text="${title}">Insert title here</title>
+</head>
+
+<body>
+	<h1 th:text="${title}">Hello, world!</h1>
+	
+	<form th:action="@{/calc/result}" th:method="get">
+		<input type="number" name="aValue">
+		<select name="op">
+			<option th:each="item: ${op.entrySet}" th:value="${item.value}" th:text="${item.key}"></option>
+		</select>
+		<input type="number" name="bValue">
+		<div>
+			<input type="submit" value="Enter" />
+		</div>
+	</form>
+	
+</body>
+
+</html>
