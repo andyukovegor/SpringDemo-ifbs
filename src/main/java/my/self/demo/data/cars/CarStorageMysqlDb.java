@@ -32,7 +32,7 @@ public class CarStorageMysqlDb implements CarStorage {
 		if (pattern != null) {
 			sqlQuery.append(" WHERE car_model.name LIKE ?");
 			sqlPattern = "%" + pattern + "%";
-			carList = jdbcTemplate.query(sqlQuery.toString(), new Object[] {sqlPattern}, new int[]{java.sql.Types.VARCHAR}, new CarRowMapper());
+			carList = jdbcTemplate.query(sqlQuery.toString(), new CarRowMapper(), sqlPattern);
 		} else {
 			carList = jdbcTemplate.query(sqlQuery.toString(), new CarRowMapper());
 		}
@@ -49,7 +49,7 @@ public class CarStorageMysqlDb implements CarStorage {
 						+ "from car_model "
 						+ "left join car_brand on car_model.car_brand_id = car_brand.id WHERE car_model.id = ?");
 		
-		return jdbcTemplate.queryForObject(sqlQuery.toString(), new Object[] {carId}, new int[] {java.sql.Types.INTEGER}, new CarRowMapper());
+		return jdbcTemplate.queryForObject(sqlQuery.toString(), new CarRowMapper(), carId);
 	}
 
 }
