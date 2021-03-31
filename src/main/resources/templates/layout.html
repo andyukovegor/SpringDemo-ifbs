@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="utf-8" />
+  <title th:text="${title}">Spring Web Demo</title>
+  <link rel="stylesheet" th:href="@{/css/main.css}"/>
+</head>
+<body id="body">
+   <div class="menu">
+        <div class="rightMenu">
+        </div>
+        <div class="sep"></div>
+    </div>
+    <header class="site-header">
+        <div class="header-content">
+            <h2><a th:href="@{/}" >Spring Web Demo</a></h2>
+        </div>
+    </header>
+	<div class="content">
+		<th:block layout:fragment="content" />
+	</div>
+	<th:block layout:fragment="jsscript" />
+</body>
