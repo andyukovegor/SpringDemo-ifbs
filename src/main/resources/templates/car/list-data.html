@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" >
-
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout}">
 <head>
 	<meta charset="UTF-8">
 	<title  th:text="${title}">Insert title here</title>
 </head>
-
 <body>
+	<th:block layout:fragment="content">
 		<h1 th:text="${title}">Car List</h1>
 		
 		<div th:if="${cars} != null">
@@ -32,6 +33,7 @@
 			
 			</table>
 		</div>
+	</th:block>
 </body>
 
 </html>

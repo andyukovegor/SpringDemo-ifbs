@@ -28,12 +28,9 @@ public class CarController {
 	
 	@GetMapping("car/list-data")
 	public ModelAndView listData(ModelAndView model) {
-		
-		carModelDataRepository.updatePriceByCarId(7, 20500.50);
-		
 		model.addObject("cars", carModelDataRepository.findAllByNameBrand("Tes%"));
 		model.addObject("title", "Список автомобилей (демонстрация Spring Data JDBC)");
-		
+
 		model.setViewName("car/list-data");
 		
 		return model;
