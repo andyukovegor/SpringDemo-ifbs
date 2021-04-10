@@ -36,14 +36,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-			.antMatchers("/", "/login/**","/user/registration/**", "/css/**", "/js/**")
+			.antMatchers("/", "/login/**","/user/registration/**", "/css/**", "/js/**", "/demo/**")
 				.permitAll()
 			.antMatchers("/user/list/**").access("hasRole('ADMIN')")
 			.anyRequest().authenticated()
 			.and().exceptionHandling().accessDeniedPage("/access-denied")			
 			.and().formLogin().loginPage("/login").permitAll()
 			.and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-				.logoutSuccessUrl("/").invalidateHttpSession(true);
+				.logoutSuccessUrl("/").invalidateHttpSession(true)
+			.and()
+				.csrf().disable();
 	}
 	
 	@Autowired

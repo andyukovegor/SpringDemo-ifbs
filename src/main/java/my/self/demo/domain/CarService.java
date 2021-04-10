@@ -8,4 +8,5 @@ public interface CarService {
 
 	public List<CarModel> getCarsList();
 	public CarModel findById(Long carId);
+	public List<CarModel> getCarsByNameLike(String name);
 }
