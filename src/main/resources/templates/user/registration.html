@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout}">
+
+<head>
+  <title th:text="Registration">User Login Page</title>
+</head>
+
+<body>
+	<th:block layout:fragment="content">
+		<h1 th:text="${'User Registration'}">User Login Page</h1>
+
+		<form th:action="@{/user/registration}" method="post" th:object="${userForm}">
+			<div>
+				<label>Email: </label>
+				<input type="text" th:field="*{email}">&nbsp;<span th:errors="*{email}"></span>
+			</div>
+
+			<div>
+				<label>Name: </label>
+				<input type="text" th:field="*{name}">&nbsp;<span th:errors="*{name}"></span>
+			</div>
+
+			<div>
+				<label>Password: </label>
+				<input type="password" th:field="*{password}">&nbsp;<span th:errors="*{password}"></span>
+			</div>
+
+			<div>
+				<label>Password confirm: </label>
+				<input type="password" th:field="*{passwordConfim}">&nbsp;<span th:errors="*{passwordConfim}"></span>
+			</div>
+			
+			<div class="form-group">
+				<input type="submit" name="login-submit" id="login-submit"
+					class="stdBtn" value="Log In">
+			</div>
+		</form>
+
+	</th:block>
+</body>
+
+</html>
