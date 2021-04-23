@@ -3,11 +3,12 @@ package my.self.demo.domain;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import my.self.demo.data.cars.CarStorage;
 import my.self.demo.domain.model.CarModel;
-
 
 @Service
 public class CarServiceDomain implements CarService {
@@ -29,5 +30,10 @@ public class CarServiceDomain implements CarService {
 	public List<CarModel> getCarsByNameLike(String name) {
 		return storage.getAllCarModels(name);
 	}
-	
+
+	@Override
+	public Page<CarModel> findAll(PageRequest pageRequest) {
+		return storage.findAll(pageRequest.toOptional().get());
+	}
+
 }

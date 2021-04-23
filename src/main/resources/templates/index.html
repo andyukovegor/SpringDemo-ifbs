@@ -5,12 +5,12 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title data-th-text="${title}">Insert title here</title>
+	<title data-th-text="#{index.title}">Insert title here</title>
 </head>
 
 <body>
 	<th:block layout:fragment="content">
-		<h1 th:text="${title}">Hello, world!</h1>
+		<h1 th:text="#{index.title}">Hello, world!</h1>
 		
 		<ul>
 			<li><a th:href="@{/calc/input}">Калькулятор</a>

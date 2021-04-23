@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+ 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout}">
+
+<body>
+	<th:block layout:fragment="content">
+
+		<h1>Car List with pagination</h1>
+		
+		<div th:if="${cars} != null">
+		
+			<table class="datatable" id="carList">
+				<tr class="column-header">
+					<td>Image</td>
+					<td>Brand</td>
+					<td>Name</td>
+					<td>Year</td>
+					<td>Price</td>
+					<td>Modify</td>
+				</tr>
+	
+				<th:block th:each="car: ${cars}">
+					<tr>
+						<td><img th:alt="${car.name}" th:src="@{'/car/img-small/' + ${car.id}}"></td>
+						<td th:text="${car.brand.name}">brand</td>
+						<td th:text="${car.name}">name</td>
+						<td th:text="${car.productionDateFormat}">Year</td>
+						<td th:text="${car.price}">Price</td>
+						<td><a th:href="@{/car/img-upload(carId=${car.id})}" href="#">Image</a></td>
+					</tr>
+				</th:block>
+				
+			
+			</table>
+			
+			<div th:if="${cars.totalPages > 0}" class="pagination">
+				    <span th:if="${cars.hasPrevious()}" th:switch="${cars.number-1 > 0}">
+				        <a th:case="${true}" th:href="@{'/car/page/' + ${cars.number-1}}">Prev</a>
+				        <a th:case="*" th:href="@{/car/page}">Prev</a>
+				    </span>
+				    <span th:if="${cars.hasNext()}">
+				        <a th:href="@{'/car/page/' + ${cars.number+1}}">Next</a>
+				    </span>
+			</div>
+					
+		</div>
+	
+	</th:block>
+	
+</body>
+
+</html>

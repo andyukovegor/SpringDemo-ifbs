@@ -1,10 +1,15 @@
 package my.self.demo.data.cars;
 
+import java.sql.Types;
 import java.util.List;
 
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -55,4 +60,34 @@ public class CarStorageMysqlDb implements CarStorage {
 		return jdbcTemplate.queryForObject(sqlQuery.toString(), new CarRowMapper(), carId);
 	}
 
+    @Override
+    public Page<CarModel> findAll(Pageable pageable) {
+           String rowCountSql = "SELECT count(*) FROM car_model";
+            int total = jdbcTemplate.queryForObject(rowCountSql, Integer.class);
+
+                    StringBuilder sqlQuery = new StringBuilder("SELECT car_model.id, car_brand_id, car_model.name, "
+                                    + "car_model.productionDate, car_model.price, "
+                                    + "car_brand.name as brandName, car_brand.url "
+                                    + " from car_model " + " left join car_brand on car_model.car_brand_id = car_brand.id ");
+
+                    if (!pageable.getSort().isEmpty()) {
+                            Order order = pageable.getSort().getOrderFor("name");
+                            if(order != null) {
+                                    sqlQuery.append(" ORDER BY name " + order.getDirection() );
+                            }
+                    } else {
+                    	sqlQuery.append(" ORDER BY id ");
+                    }
+                            
+        sqlQuery.append(" LIMIT ? OFFSET ? ");
+                            
+            List<CarModel> cars = jdbcTemplate.query(sqlQuery.toString(),
+                            new Object[] { pageable.getPageSize(), pageable.getOffset() },
+                            new int[] { Types.INTEGER, Types.BIGINT },
+                            new CarRowMapper());
+
+            return new PageImpl<>(cars, pageable, total);
+    }
+
+	
 }
